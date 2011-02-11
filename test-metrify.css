@@ -1,0 +1,8 @@
+.passed {background: #A3D9A3;}
+.failed {background: #D9A3A3;}
+#num-total {font-weight: bold;}
+#num-passed {font-weight: bold; color: green;}
+#num-failed {font-weight: bold; color: #a00;}
+.test-results td {width: 100px;}
+.test-cases {border-collapse: collapse;}
+.test-cases td {border: 1px solid;}

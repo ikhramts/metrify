@@ -1,0 +1,368 @@
+<html>
+<head>
+    <title>Metrify tests</title>
+    <link rel="stylesheet" href="/test-metrify.css" />
+    <script language="javascript" src="/jquery-1.5.min.js" ></script>
+    <script language="javascript" src="/test-metrify.js" ></script>
+</head>
+<body>
+<h2>Metrify tests</h2>
+<h3>Summary</h3>
+<table class="test-results">
+    <tr><td>Total:</td><td><span id="num-total">0</span></td></tr>
+    <tr><td>Passed:</td><td><span id="num-passed">0</span></td></tr>
+    <tr><td>Failed:</td><td><span id="num-failed">0</span></td></tr>
+</table>
+<h3>Basic Conversion Tests</h3>
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">12 miles</td>
+        <td class="expected-result">19 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1 mile</td>
+        <td class="expected-result">1.6 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">10 miles</td>
+        <td class="expected-result">16 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">2 mile</td>
+        <td class="expected-result">3.2 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">2 milensd</td>
+        <td class="expected-result">2 milensd</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">d2 mile</td>
+        <td class="expected-result">d2 mile</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">2 miles.</td>
+        <td class="expected-result">3.2 km.</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">2 miles,</td>
+        <td class="expected-result">3.2 km,</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+
+<h3>Significant figures tests</h3>
+<p>
+    The conversion should generally keep the same number of significant figures
+    as the original number, i.e. "220 miles" should be converted to "350 km",
+    not "354 km".  
+</p>
+<p>
+    The exception to this is when converting numbers with only
+    one significant figure; in this case, if the second figure of the conversion
+    is not a "0", a second significant figure should be added.  I.e. 
+    "1 mile" should be converted to "1.6 km", not "2 km", but "5 miles" should be 
+    converted to "8 km", not "8.0 km".
+</p>
+
+<p> 
+    Additionally, when converting a number that is an exact power of 10 (e.g. 100,
+    1, or 0.1) to a number that is lower in mangitude, only one significant figure 
+    should be kept, e.g. "1000 km" should become "600 miles", not "620 miles".  This 
+    does not apply when it is clear that there are more than one significant 
+    figures, e.g. "1.0 km" should be converted to "0.62 miles".
+</p>
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1 mile</td>
+        <td class="expected-result">1.6 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">10 miles</td>
+        <td class="expected-result">16 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">300 miles</td>
+        <td class="expected-result">480 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">5 miles</td>
+        <td class="expected-result">8 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">22 miles</td>
+        <td class="expected-result">35 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.68 miles</td>
+        <td class="expected-result">2.70 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1 ft</td>
+        <td class="expected-result">0.3 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">10 ft</td>
+        <td class="expected-result">3 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+
+<h3>Thousands and decimal separator tests</h3>
+<p>
+    These should be preserved as much as possible.  At the present only
+    ',' and ' ' are recognized as thousands separators; only '.' is recognized
+    as a decimal mark.  When the number is too small to determine a thousands
+    separator, ',' will be used.
+</p>
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <!-- Length -->
+    <tr class="test-case">
+        <td class="test-result">1000 miles</td>
+        <td class="expected-result">1600 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1,000 miles</td>
+        <td class="expected-result">1,600 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1 000 miles</td>
+        <td class="expected-result">1 600 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1000000 miles</td>
+        <td class="expected-result">1600000 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1,000,000 miles</td>
+        <td class="expected-result">1,600,000 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1 000 000 miles</td>
+        <td class="expected-result">1 600 000 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">800 miles</td>
+        <td class="expected-result">1,300 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+
+<h3>Units to be converted</h3>
+<p>
+    Generally speaking, units should be convetred into units of equivalent size,
+    e.g. inches to cm, miles to km, ounces to grams, pounds to kg.
+</p>
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <!-- Length -->
+    <tr class="test-case">
+        <td class="test-result">1.00 inches</td>
+        <td class="expected-result">2.54 cm</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 in</td>
+        <td class="expected-result">2.54 cm</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00"</td>
+        <td class="expected-result">2.54 cm</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 feet</td>
+        <td class="expected-result">0.305 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 ft</td>
+        <td class="expected-result">0.305 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 yards</td>
+        <td class="expected-result">0.914 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 yd</td>
+        <td class="expected-result">0.914 m</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 miles</td>
+        <td class="expected-result">1.61 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 mi</td>
+        <td class="expected-result">1.61 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+
+    <!-- Area -->
+    <tr class="test-case">
+        <td class="test-result">1.00 square inches</td>
+        <td class="expected-result">6.45 cm²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq inches</td>
+        <td class="expected-result">6.45 cm²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square in</td>
+        <td class="expected-result">6.45 cm²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq in</td>
+        <td class="expected-result">6.45 cm²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square feet</td>
+        <td class="expected-result">0.0929 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq feet</td>
+        <td class="expected-result">0.0929 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square ft</td>
+        <td class="expected-result">0.0929 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq ft</td>
+        <td class="expected-result">0.0929 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square yards</td>
+        <td class="expected-result">0.836 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq yards</td>
+        <td class="expected-result">0.836 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square yd</td>
+        <td class="expected-result">0.836 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq yd</td>
+        <td class="expected-result">0.836 m²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square miles</td>
+        <td class="expected-result">2.59 km²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq miles</td>
+        <td class="expected-result">2.59 km²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 square mi</td>
+        <td class="expected-result">2.59 km²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 sq mi</td>
+        <td class="expected-result">2.59 km²</td>
+        <td class="test-outcome"></td>
+    </tr>
+    
+    <!-- Mass -->
+    <tr class="test-case">
+        <td class="test-result">1.00 ounces</td>
+        <td class="expected-result">28.3 g</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 oz</td>
+        <td class="expected-result">28.3 g</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 pounds</td>
+        <td class="expected-result">0.454 kg</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 lb</td>
+        <td class="expected-result">0.454 kg</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 °F</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 degrees fahrenheit</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 degree fahrenheit</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 fahrenheit</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+</body>
+</html>
