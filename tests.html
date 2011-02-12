@@ -182,6 +182,36 @@
     </tr>
 </table>
 
+<h3>Plus and minus signs</h3>
+<p>
+    These should be preserved whenever possible.  By default it is assumed
+    that the '+' is not displayed; it should be displayed only when 
+    the original quantity displays it.
+</p>
+
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">-2 miles,</td>
+        <td class="expected-result">-3.2 km,</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">+10 °F</td>
+        <td class="expected-result">-12 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">+2 mi</td>
+        <td class="expected-result">+3.2 km</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+
 <h3>Units to be converted</h3>
 <p>
     Generally speaking, units should be convetred into units of equivalent size,
@@ -193,7 +223,6 @@
         <th>Expected outcome</th>
         <th>Passed</th>
     </tr>
-    <!-- Length -->
     <tr class="test-case">
         <td class="test-result">1.00 inches</td>
         <td class="expected-result">2.54 cm</td>
@@ -201,6 +230,11 @@
     </tr>
     <tr class="test-case">
         <td class="test-result">1.00 in</td>
+        <td class="expected-result">2.54 cm</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00&quot;</td>
         <td class="expected-result">2.54 cm</td>
         <td class="test-outcome"></td>
     </tr>
@@ -345,6 +379,16 @@
     </tr>
     <tr class="test-case">
         <td class="test-result">40.0 °F</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 ºF</td>
+        <td class="expected-result">4.44 °C</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">40.0 &deg;F</td>
         <td class="expected-result">4.44 °C</td>
         <td class="test-outcome"></td>
     </tr>

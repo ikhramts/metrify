@@ -9,7 +9,7 @@
         var hasPassedDecimalMark = false;
         
         for (var i = 0; i < amount.length; i++) {
-            var ch = amount[i];
+            var ch = amount.charAt(i);
             
             if (numSigFigs == 0) {
                 if (ch == '.') {
@@ -50,7 +50,7 @@
      * the number is 0.0284, the function would return '8'.
      */
     var getNthDigit = function(number, n) {
-        var normalizedNumber = number;
+        var normalizedNumber = Math.abs(number);
         var upperBound = Math.pow(10, n);
         var lowerBound = Math.pow(10, n - 1);
         
@@ -77,6 +77,11 @@
         var lowerBound = Math.pow(10, numSigFigs-1);
         var multiplier = 1;
         
+        if (normalizedNumber < 0) {
+            multiplier = -1;
+            normalizedNumber = -normalizedNumber;
+        }
+        
         while (normalizedNumber >= upperBound || normalizedNumber < lowerBound) {
             if (normalizedNumber >= upperBound) {
                 normalizedNumber /= 10;
@@ -97,7 +102,7 @@
      * associated with the most significant digit.
      */
     var getOrderOfMagnitude = function(number) {
-        var normalizedNumber = number;
+        var normalizedNumber = Math.abs(number);
         var orderOfMagnitude = 1;
         
         while (normalizedNumber >= 10 || normalizedNumber < 1) {
@@ -123,6 +128,15 @@
             return numberAsString;
         }
         
+        // Take out the unary + or -.
+        var sign = "";
+        var firstChar = numberAsString.charAt(0);
+        
+        if (firstChar == '+' || firstChar == '-') {
+            sign = firstChar;
+            numberAsString = numberAsString.substring(1);
+        }
+        
         var numberParts = numberAsString.split(decimalMark);
         var wholePart = numberParts[0];
         var i = wholePart.length - 3;
@@ -134,14 +148,7 @@
             i -= 3;
         }
         
-        /*
-        var replacement = "$1" + thousandsSeparator + $2";
-        while (/\d+\d{3}\b/.test(wholePart)) {
-            wholePart.replace(/(\d+)(\d{3})\b/, replacement);
-        }
-        */
-        
-        var result = wholePart;
+        var result = sign + wholePart;
         if (numberParts.length > 1) {
             result += decimalMark + numberParts[1];
         }
@@ -153,22 +160,22 @@
      * Escape special regex characters.
      */
     var escapeRegex = function(str) {
-        return str.replace(/([\\\.\$\^\{\}\(\)])/g, '\$1');
+        return str.replace(/([\\\.\$\^\{\}\(\)\+\*\?\|])/g, '\$1');
     };
     
     // The general regular expression used to find the quantities to convert.
     var quantityPattern = 
-        /\b((\d+|\d{1,3}(([\s,])\d{3})+)(([.])\d+)?)\s*(miles?|mi|foot|feet|ft|inch|inches|in|"|yards?|yd|ounces?|oz|pounds?|lb|°F|fahrenheit|degrees? fahrenheit)\b/i;
+        /\b([\+\-]?(\d+|\d{1,3}(([\s,])\d{3})+)(([.])\d+)?)(\s*|-)?(miles?|mi|foot|feet|ft|inch|inches|in|"|&quot;|yards?|yd|ounces?|oz|pounds?|lb|°F|ºF|&deg;F|fahrenheit|degrees? fahrenheit)\b/i;
     var fullQuantityGroup = 0;
     var amountGroup = 1;
     var wholePartGroup = 2;
     var decimalMarkGroup = 6;
     var thousandsSeparatorGroup = 4;
+    var unitSeparatorGroup = 7;
 
     // Start converting the quantities in the body of the page.
     var body = document.getElementsByTagName('body')[0];
     var bodyHtml = body.innerHTML;
-    var newBodyHtml = "";
     var madeChanges = false;
     
     do {
@@ -183,6 +190,7 @@
         var fullQuantity = quantityMatch[fullQuantityGroup];
         var units = quantityMatch[quantityMatch.length - 1];
         var amount = quantityMatch[amountGroup];
+        var unitSeparator = quantityMatch[unitSeparatorGroup]
         
         var wholePart = quantityMatch[wholePartGroup];
         if (typeof(wholePart) == 'undefined') {
@@ -202,6 +210,9 @@
             thousandsSeparator = ',';
         }
         
+        // Record the presence of any unary '+' on front of the number.
+        var hasUnaryPlus = (fullQuantity.charAt(0) == '+');
+        
         // Figure out which units we're working with.
         var intercept = 0;
         var slope = 1;
@@ -217,7 +228,7 @@
             slope = 0.3048;
             toUnits = "m";
             
-        } else if (/inch|inches|in|"/i.test(units)) {
+        } else if (/inch|inches|in|"|&quot;/i.test(units)) {
             intercept = 0;
             slope = 2.54;
             toUnits = "cm";
@@ -237,15 +248,15 @@
             slope = 0.45359237;
             toUnits = "kg";
             
-        } else if (/°F|fahrenheit|degrees fahrenheit/i.test(units)) {
-            intercept = -32*5/9;
-            slope = 5/9;
-            toUnits = "°C";
+        } else if (/(°F|ºF|&deg;F|fahrenheit|degrees? fahrenheit)/i.test(units)) {
+            intercept = -32 * 5 / 9;
+            slope = 5 / 9;
+            toUnits = "&deg;C";
         }
         
         // Convert the number.
-        if (amount == "1,000,000") {
-            var x = 2;
+        if (/10 �F/i.test(fullQuantity)) {
+            var x = 0;
         }
         
         if (thousandsSeparator != "") {
@@ -269,8 +280,12 @@
         strConvertedAmount = 
             insertThousandsSeparators(strConvertedAmount, thousandsSeparator, '.');
         
-        var convertedQuantity = strConvertedAmount + " " + toUnits;
-
+        var convertedQuantity = strConvertedAmount + unitSeparator + toUnits;
+        
+        if (hasUnaryPlus && convertedAmount > 0) {
+            strConvertedAmount = '+' + strConvertedAmount;
+        }
+        
         // Replace the old quantity with the new converted one.
         var oldQuantityPatternString = "\\b" + escapeRegex(fullQuantity) + "\\b";
         var oldQuantityPattern = new RegExp(oldQuantityPatternString, 'g');
@@ -283,7 +298,6 @@
     } while(true);
     
     //Append a special signal element if it does not exist.
-    
     var signalElement = document.getElementById('metrify-done-notifier');
     if (signalElement == null) {
         var signalElementHtml = '<a href="javascript:void(0)" id="metrify-done-notifier" ' +
@@ -295,9 +309,18 @@
     
     //Signal that we're done.
     signalElement = document.getElementById('metrify-done-notifier');
-    var event = document.createEvent("MouseEvents");
-    event.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, 
-                       false, false, false, false, 0, null);
-    (event)? signalElement.dispatchEvent(event) : (signalElement.click && signalElement.click());
+    
+    if (document.createEvent) {
+        //
+        var evt = document.createEvent("MouseEvents");
+        evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, 
+                        false, false, false, false, 0, null);
+        signalElement.dispatchEvent(evt);
+    
+    } else if (document.createEventObject) {
+        var evt = document.createEventObject();
+        signalElement.fireEvent('onclick', evt);
+    }
+    //(evt)? signalElement.dispatchEvent(evt) : (signalElement.click && signalElement.click());
 
 })();
