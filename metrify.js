@@ -255,10 +255,6 @@
         }
         
         // Convert the number.
-        if (/10 °F/i.test(fullQuantity)) {
-            var x = 0;
-        }
-        
         if (thousandsSeparator != "") {
             var allSeparatorsPattern = new RegExp(escapeRegex(thousandsSeparator), 'g');
             amount = amount.replace(allSeparatorsPattern, "");
