@@ -1,0 +1,30 @@
+
+            METRIFY AND IMPERIALIZE BOOKMARKLETS
+            ====================================
+
+This readme is intended to help those who wish to change the bookmarlet
+code; for instructions on how to use the bookmarklets see 
+http://metrify.org/
+
+
+Contents
+--------
+
+This repository should contain:
+
+- metrify.js, imperialize.js: the main code that performs the work.  This
+    code is kept on the server; the users bookmark only a small snippet
+    that loads the appropriate JavaScript file to execute.  This allows
+    to update the main bookmarklet logic without requiring the users
+    to update their bookmarks.
+
+- metrify-bookmarklet.js, imperialize-bookmarklet.js: contain the code
+    that the user stores in the bookmarks.
+
+- tests(.*).(html|js|css): test suites for the bookmarklets.  Most of the
+    general tests and Metrify-specific tests are in tests.html; the tests
+    related to converting metric units to imperial are in 
+    imperialize-tests.html.
+
+- index.html - convenient links to the rest of the files.
+
