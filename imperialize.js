@@ -165,7 +165,7 @@
     
     // The general regular expression used to find the quantities to convert.
     var quantityPattern = 
-        /\b([\+\-]?(\d+|\d{1,3}(([\s,])\d{3})+)(([.])\d+)?)(\s*|-)?(kilometers?|km|meters?|metres?|m|centimeters?|centimetres?|cm|mm|millimeters?|millimetres?|grams?|grammes?|g|kilograms?|kilogrammes?|kg|Â°C|ÂºC|&deg;C|celsius|degrees? celsius)\b/i;
+        /\b([\+\-]?(\d+|\d{1,3}(([\s,])\d{3})+)(([.])\d+)?)(\s*|-)?(kilometers?|kilometres?|km|meters?|metres?|m|centimeters?|centimetres?|cm|mm|millimeters?|millimetres?|grams?|grammes?|g|kilograms?|kilogrammes?|kg|Â°C|ÂºC|&deg;C|celsius|degrees? celsius)\b/i;
     var fullQuantityGroup = 0;
     var amountGroup = 1;
     var wholePartGroup = 2;
@@ -218,37 +218,37 @@
         var slope = 1;
         var toUnits = "";
         
-        if (/kilometers?|km/i.test(units)) {
+        if (/^(kilometers?|kilometres?|km)$/i.test(units)) {
             intercept = 0;
             slope = 0.621371192;
             toUnits = "miles";
             
-        } else if (/(meters?|metres?|m)/i.test(units)) {
+        } else if (/^(meters?|metres?|m)$/i.test(units)) {
             intercept = 0;
             slope = 3.2808399;
             toUnits = "ft";
             
-        } else if (/centimeters?|centimetres?|cm/i.test(units)) {
+        } else if (/^(centimeters?|centimetres?|cm)$/i.test(units)) {
             intercept = 0;
             slope = 0.393700787;
             toUnits = "in";
             
-        } else if (/mm|millimeters?|millimetres?/i.test(units)) {
+        } else if (/^(mm|millimeters?|millimetres?)$/i.test(units)) {
             intercept = 0;
             slope = 0.0393700787;
             toUnits = "in";
             
-        } else if (/grams?|grammes?|g/i.test(units)) {
+        } else if (/^(grams?|grammes?|g)$/i.test(units)) {
             intercept = 0;
             slope = 0.0352739619;
             toUnits = "oz";
             
-        } else if (/kilograms?|kilogrammes?|kg/i.test(units)) {
+        } else if (/^(kilograms?|kilogrammes?|kg)$/i.test(units)) {
             intercept = 0;
             slope = 2.20462262;
             toUnits = "lb";
             
-        } else if (/(Â°C|ÂºC|&deg;C|celsius|degrees? celsius)/i.test(units)) {
+        } else if (/^(Â°C|ÂºC|&deg;C|celsius|degrees? celsius)$/i.test(units)) {
             intercept = 32;
             slope = 9/5;
             toUnits = "&deg;F";

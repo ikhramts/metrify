@@ -1,0 +1,222 @@
+<html>
+<head>
+    <title>Metrify tests</title>
+    <link rel="stylesheet" href="/test-metrify.css" />
+    <script language="javascript" src="/jquery-1.5.min.js" ></script>
+    <script language="javascript" src="/test-imperialize.js" ></script>
+</head>
+<body>
+<h2>Metrify tests</h2>
+<h3>Summary</h3>
+<table class="test-results">
+    <tr><td>Total:</td><td><span id="num-total">0</span></td></tr>
+    <tr><td>Passed:</td><td><span id="num-passed">0</span></td></tr>
+    <tr><td>Failed:</td><td><span id="num-failed">0</span></td></tr>
+</table>
+
+<h3>Units to be converted</h3>
+<p>
+    Generally speaking, units should be convetred into units of equivalent size,
+    e.g. inches to cm, miles to km, ounces to grams, pounds to kg.
+</p>
+<table class="test-cases">
+    <tr>
+        <th>Test</th>
+        <th>Expected outcome</th>
+        <th>Passed</th>
+    </tr>
+    <!-- mm -->
+    <tr class="test-case">
+        <td class="test-result">1.00 centimeters</td>
+        <td class="expected-result">0.394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 centimeter</td>
+        <td class="expected-result">0.394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 cm</td>
+        <td class="expected-result">0.394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 centimetre</td>
+        <td class="expected-result">0.394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 centimetres</td>
+        <td class="expected-result">0.394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <!-- cm -->
+    <tr class="test-case">
+        <td class="test-result">1.00 millimeters</td>
+        <td class="expected-result">0.0394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 millimeter</td>
+        <td class="expected-result">0.0394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 mm</td>
+        <td class="expected-result">0.0394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 millimetre</td>
+        <td class="expected-result">0.0394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 millimetres</td>
+        <td class="expected-result">0.0394 in</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <!-- m -->
+    <tr class="test-case">
+        <td class="test-result">1.00 meters</td>
+        <td class="expected-result">3.28 ft</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 meter</td>
+        <td class="expected-result">3.28 ft</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 metres</td>
+        <td class="expected-result">3.28 ft</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 metre</td>
+        <td class="expected-result">3.28 ft</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 m</td>
+        <td class="expected-result">3.28 ft</td>
+        <td class="test-outcome"></td>
+    </tr>
+
+    <!-- km -->
+    <tr class="test-case">
+        <td class="test-result">1.00 kilometer</td>
+        <td class="expected-result">0.621 miles</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilometer</td>
+        <td class="expected-result">0.621 miles</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilometres</td>
+        <td class="expected-result">0.621 miles</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilometre</td>
+        <td class="expected-result">0.621 miles</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 km</td>
+        <td class="expected-result">0.621 miles</td>
+        <td class="test-outcome"></td>
+    </tr>
+    
+    <!-- g -->
+    <tr class="test-case">
+        <td class="test-result">1.00 gram</td>
+        <td class="expected-result">0.0353 oz</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 gramme</td>
+        <td class="expected-result">0.0353 oz</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 grams</td>
+        <td class="expected-result">0.0353 oz</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 grammes</td>
+        <td class="expected-result">0.0353 oz</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 g</td>
+        <td class="expected-result">0.0353 oz</td>
+        <td class="test-outcome"></td>
+    </tr>
+
+    <!-- kg -->
+    <tr class="test-case">
+        <td class="test-result">1.00 kilogram</td>
+        <td class="expected-result">2.20 lb</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilograms</td>
+        <td class="expected-result">2.20 lb</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilogramme</td>
+        <td class="expected-result">2.20 lb</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kilogrammes</td>
+        <td class="expected-result">2.20 lb</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">1.00 kg</td>
+        <td class="expected-result">2.20 lb</td>
+        <td class="test-outcome"></td>
+    </tr>
+
+
+    <!-- °C -->
+    <tr class="test-case">
+        <td class="test-result">4.44 °C</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">4.44 ºC</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">4.44 &deg;C</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">4.44 degrees celsius</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">4.44 degree celsius</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+    <tr class="test-case">
+        <td class="test-result">4.44 celsius</td>
+        <td class="expected-result">40.0 &deg;F</td>
+        <td class="test-outcome"></td>
+    </tr>
+</table>
+</body>
+</html>

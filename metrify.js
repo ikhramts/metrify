@@ -218,37 +218,37 @@
         var slope = 1;
         var toUnits = "";
         
-        if (/miles?|mi/i.test(units)) {
+        if (/^(miles?|mi)$/i.test(units)) {
             intercept = 0;
             slope = 1.609344;
             toUnits = "km";
             
-        } else if (/(foot|feet|ft)/i.test(units)) {
+        } else if (/^(foot|feet|ft)$/i.test(units)) {
             intercept = 0;
             slope = 0.3048;
             toUnits = "m";
             
-        } else if (/inch|inches|in|"|&quot;/i.test(units)) {
+        } else if (/^(inch|inches|in|"|&quot;)$/i.test(units)) {
             intercept = 0;
             slope = 2.54;
             toUnits = "cm";
             
-        } else if (/yards?|yd/i.test(units)) {
+        } else if (/^(yards?|yd)$/i.test(units)) {
             intercept = 0;
             slope = 0.9144;
             toUnits = "m";
             
-        } else if (/ounces?|oz/i.test(units)) {
+        } else if (/^(ounces?|oz)$/i.test(units)) {
             intercept = 0;
             slope = 28.3495231;
             toUnits = "g";
             
-        } else if (/pounds?|lb/i.test(units)) {
+        } else if (/^(pounds?|lb)$/i.test(units)) {
             intercept = 0;
             slope = 0.45359237;
             toUnits = "kg";
             
-        } else if (/(°F|ºF|&deg;F|fahrenheit|degrees? fahrenheit)/i.test(units)) {
+        } else if (/(°F|ºF|&deg;F|fahrenheit|degrees? fahrenheit)$/i.test(units)) {
             intercept = -32 * 5 / 9;
             slope = 5 / 9;
             toUnits = "&deg;C";
